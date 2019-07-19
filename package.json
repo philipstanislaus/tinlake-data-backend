@@ -1,8 +1,8 @@
 {
   "name": "tinlake-data-backend",
-  "version": "0.2.0",
+  "version": "0.1.0",
   "description": "nodejs/typescript application that will query the Ethereum JSON RPC interface on a continuous basis to log time series data to a database and expose this data via a Rest",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "make test"
   },
@@ -18,5 +18,18 @@
   "bugs": {
     "url": "https://github.com/centrifuge/tinlake-data-backend/issues"
   },
-  "homepage": "https://github.com/centrifuge/tinlake-data-backend#readme"
+  "homepage": "https://github.com/centrifuge/tinlake-data-backend#readme",
+  "dependencies": {
+    "apollo-server": "^2.6.9",
+    "ethjs-provider-signer": "^0.1.4",
+    "ethjs-signer": "^0.1.1",
+    "graphql": "^14.4.2",
+    "graphql-tools": "^4.0.5",
+    "nedb": "^1.8.0",
+    "next": "^9.0.1",
+    "tinlake": "git+ssh://git@github.com/centrifuge/tinlake.js.git"
+  },
+  "devDependencies": {
+    "@types/graphql": "^14.2.2"
+  }
 }
