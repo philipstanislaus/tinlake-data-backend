@@ -1,42 +1,52 @@
-const { DataSource } = require('apollo-datasource');
-
+import { DataSource } from 'apollo-datasource';
+import Datastore from 'nedb';
 
 class EventAPI extends DataSource {
-  constructor({ store }) {
+  store: Datastore;
+
+  constructor({ store }: { store: Datastore }) {
     super();
     this.store = store;
   }
 
-  async createEvent(data) {
-    var doc = {
+  async createEvent(data:
+    { Debt: string, TotalValueofNFTs: string, totalSupply: string, NumberOfLoans: string; }) {
+    return new Promise((resolve, reject) => {
+      const doc = {
         timestamp: new Date(),
         Debt: data['Debt'],
         TotalValueofNFTs: data['TotalValueofNFTs'],
         totalSupply: data['totalSupply'],
-        NumberOfLoans: data['NumberOfLoans']
-    };
+        NumberOfLoans: data['NumberOfLoans'],
+      };
 
-    this.store.insert(doc, function (err, newDoc) {});
+      this.store.insert(doc, (err, newDoc) => {
+        if (err) { reject(err); } else { resolve(newDoc); }
+      });
+    });
   }
-  async findByPeriod(period) {
-    if (period == '24h') {
-        var days = 1;
-    }
-    else if (period == '7d'){
-        var days = 7;
-    };
+  async findByPeriod(period: '24h' | '7d') {
+    return new Promise((resolve, reject) => {
+      let days: number = 30;
+      if (period === '24h') {
+        days = 1;
+      } else if (period === '7d') {
+        days = 7;
+      }
 
-    var today_date = new Date();
-    var end_date = today_date;
-    var start_date = new Date();
-    start_date.setDate(today_date.getDate()-days);
+      const today_date = new Date();
+      const end_date = today_date;
+      const start_date = new Date();
+      start_date.setDate(today_date.getDate() - days);
 
-    return this.store.find({ timestamp: { $gte: start_date, $lte: end_date} }, function (err, docs) {
-            if(err) reject(err);
-            resolve(docs);
+      return this.store.find(
+        { timestamp: { $gte: start_date, $lte: end_date } },
+        (err: Error, docs: any) => {
+          if (err) { reject(err); } else { resolve(docs); }
         });
-   }
+    });
+  }
 
 }
 
-module.exports = EventAPI;
+export default EventAPI;

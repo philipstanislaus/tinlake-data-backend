@@ -6,5 +6,3 @@ var Datastore = require('nedb'), db = new Datastore({ filename: '.tinlake_events
 var api = new EventAPI({ db: db });
 var data = tinlake_1.getTinlakeData();
 data.then(function (result) { return api.createEvent(result); });
-var docs = api.findLastEvents('24h');
-docs.then(function (docs) { return console.log(docs); });
