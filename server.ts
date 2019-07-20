@@ -1,6 +1,6 @@
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
-import schema from './services/graphql_settings/schema';
+import typeDefs from './services/graphql_settings/schema';
 import resolvers  from './services/graphql_settings/resolvers';
 import EventAPI  from './services/graphql_settings/datasources/event';
 import fs from 'fs';
@@ -23,7 +23,7 @@ const dataSources = () => ({
   eventAPI: new EventAPI({ store: db }),
 });
 
-const apollo = new ApolloServer({ schema, resolvers, dataSources });
+const apollo = new ApolloServer({ typeDefs, resolvers, dataSources });
 
 const app = express();
 apollo.applyMiddleware({ app });

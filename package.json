@@ -4,7 +4,7 @@
   "description": "nodejs/typescript application that will query the Ethereum JSON RPC interface on a continuous basis to log time series data to a database and expose this data via a Rest",
   "main": "index.ts",
   "scripts": {
-    "dev": "ts-node server.ts",
+    "dev": "NODE_ENV=development ts-node server.ts",
     "test": "make test",
     "lint": "node_modules/.bin/tslint --project ."
   },
