@@ -1,25 +1,21 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 exports.__esModule = true;
-var express_1 = __importDefault(require("express"));
+var express_1 = require("express");
 var apollo_server_express_1 = require("apollo-server-express");
 var schema = require('./services/graphql_settings/schema');
 var resolvers = require('./services/graphql_settings/resolvers');
 var EventAPI = require('./services/graphql_settings/datasources/event');
-var fs_1 = __importDefault(require("fs"));
-var https_1 = __importDefault(require("https"));
-var http_1 = __importDefault(require("http"));
+var fs_1 = require("fs");
+var https_1 = require("https");
+var http_1 = require("http");
 var Datastore = require('nedb'), db = new Datastore({ filename: '.tinlake_events.db', autoload: true });
 var configurations = {
     // Note: You may need sudo to run on port 443
     production: { ssl: true, port: 443, hostname: 'example.com' },
     development: { ssl: false, port: 4000, hostname: 'localhost' }
 };
-var environment = process.env.NODE_ENV || 'production';
+var environment = process.env.NODE_ENV === 'development' ? 'development' : 'production';
 var config = configurations[environment];
-var eventAPI = new EventAPI({ db: db });
 var dataSources = function () { return ({
     eventAPI: new EventAPI({ db: db })
 }); };

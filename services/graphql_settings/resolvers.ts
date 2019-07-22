@@ -1,4 +1,6 @@
-module.exports = {
+import { IResolvers } from 'graphql-tools';
+
+const resolvers: IResolvers = {
   Query: {
     last1d: (_, __, { dataSources }) =>
       dataSources.EventAPI.findByPeriod('24h'),
@@ -9,5 +11,7 @@ module.exports = {
     last90d: (_, __, { dataSources }) =>
       dataSources.EventAPI.findByPeriod('90d'),
 
-  }
+  },
 };
+
+export default resolvers;

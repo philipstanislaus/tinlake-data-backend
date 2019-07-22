@@ -1,12 +1,10 @@
-import Tinlake from 'tinlake';
 import { getTinlakeData } from './services/tinlake';
-const EventAPI = require('./services/graphql_settings/datasources/event');
+import Datastore from 'nedb';
+import EventAPI from './services/graphql_settings/datasources/event';
 
-var Datastore = require('nedb')
-  , db = new Datastore({ filename: '.tinlake_events.db', autoload: true });
+const db = new Datastore({ filename: '.tinlake_events.db', autoload: true });
 
-let api = new EventAPI({ db });
+const api = new EventAPI({ store: db });
 
-let data = getTinlakeData();
-data.then(result=>api.createEvent(result));
-
+const data = getTinlakeData();
+data.then(result => api.createEvent(result));

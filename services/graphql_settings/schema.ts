@@ -1,5 +1,4 @@
-
-import gql from "graphql-tag";
+import gql from 'graphql-tag';
 
 export const typeDefs = gql`
   type Query {
@@ -18,5 +17,4 @@ export const typeDefs = gql`
   }
 `;
 
-
-module.exports = typeDefs;
+export default typeDefs;
