@@ -16,6 +16,18 @@
     "strict": true,
     "target": "es2015",
     "esModuleInterop": true,
-    "resolveJsonModule": true
-  }
+    "resolveJsonModule": true,
+    "outDir": "build",
+    "declarationDir": "./dist",
+    "composite": true,
+    "declaration": true
+  },
+  "include": [
+    "src/**/*",
+    "src/services/tinlake/addresses_tinlake.json"
+  ],
+  "exclude": [
+    "node_modules",
+    "typings"
+  ]
 }

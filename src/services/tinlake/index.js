@@ -34,20 +34,23 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
+var tinlake_1 = __importDefault(require("tinlake"));
+var addresses_tinlake_json_1 = __importDefault(require("./addresses_tinlake.json"));
+var ethjs_signer_1 = require("ethjs-signer");
 var SignerProvider = require('ethjs-provider-signer');
-var sign = require('ethjs-signer').sign;
 var rpcUrl = 'https://kovan.infura.io/v3/092108ec6aea46ab97b2175b45130455';
 var eth_pr_key = '0x30934837cdc94b93a7142122338784b6c73183c8aa1d279b47e84f85c5d7367f';
-var EthFromAddress = "0x54b7ffd4ae11b0896b4fc2cf59e5570dbdf18abd";
-var tinlake_1 = require("tinlake");
-var addresses_tinlake_json_1 = require("./addresses_tinlake.json");
+var EthFromAddress = '0x54b7ffd4ae11b0896b4fc2cf59e5570dbdf18abd';
 function getTinlake() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             return [2 /*return*/, new tinlake_1["default"](new SignerProvider(rpcUrl, {
                     signTransaction: function (rawTx, cb) {
-                        return cb(null, sign(rawTx, eth_pr_key));
+                        return cb(null, ethjs_signer_1.sign(rawTx, eth_pr_key));
                     },
                     accounts: function (cb) { return cb(null, [EthFromAddress]); }
                 }), addresses_tinlake_json_1["default"], {
@@ -59,7 +62,7 @@ function getTinlake() {
 exports.getTinlake = getTinlake;
 function getTinlakeData() {
     return __awaiter(this, void 0, void 0, function () {
-        var tinlake, TotalDebt, TotalValueofNFTs, totalSupply, NumberOfLoans, data;
+        var tinlake, TotalDebt, TotalValueofNFTs, NumberOfLoans, data;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0: return [4 /*yield*/, getTinlake()];
@@ -71,14 +74,13 @@ function getTinlakeData() {
                     return [4 /*yield*/, tinlake.contracts.shelf.bags()];
                 case 3:
                     TotalValueofNFTs = _a.sent();
-                    totalSupply = null;
                     return [4 /*yield*/, tinlake.contracts.title.count()];
                 case 4:
                     NumberOfLoans = _a.sent();
                     data = {
                         Debt: TotalDebt[0].toString(),
                         TotalValueofNFTs: TotalValueofNFTs[0].toString(),
-                        totalSupply: 0,
+                        totalSupply: '0',
                         NumberOfLoans: NumberOfLoans[0].toString()
                     };
                     return [2 /*return*/, data];
@@ -87,4 +89,3 @@ function getTinlakeData() {
     });
 }
 exports.getTinlakeData = getTinlakeData;
-;

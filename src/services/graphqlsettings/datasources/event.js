@@ -1,3 +1,4 @@
+"use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = function (d, b) {
         extendStatics = Object.setPrototypeOf ||
@@ -46,7 +47,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var DataSource = require('apollo-datasource').DataSource;
+exports.__esModule = true;
+var apollo_datasource_1 = require("apollo-datasource");
 var EventAPI = /** @class */ (function (_super) {
     __extends(EventAPI, _super);
     function EventAPI(_a) {
@@ -57,43 +59,56 @@ var EventAPI = /** @class */ (function (_super) {
     }
     EventAPI.prototype.createEvent = function (data) {
         return __awaiter(this, void 0, void 0, function () {
-            var doc;
+            var _this = this;
             return __generator(this, function (_a) {
-                doc = {
-                    timestamp: new Date(),
-                    Debt: data['Debt'],
-                    TotalValueofNFTs: data['TotalValueofNFTs'],
-                    totalSupply: data['totalSupply'],
-                    NumberOfLoans: data['NumberOfLoans']
-                };
-                this.store.insert(doc, function (err, newDoc) { });
-                return [2 /*return*/];
+                return [2 /*return*/, new Promise(function (resolve, reject) {
+                        var doc = {
+                            timestamp: new Date(),
+                            Debt: data['Debt'],
+                            TotalValueofNFTs: data['TotalValueofNFTs'],
+                            totalSupply: data['totalSupply'],
+                            NumberOfLoans: data['NumberOfLoans']
+                        };
+                        _this.store.insert(doc, function (err, newDoc) {
+                            if (err) {
+                                reject(err);
+                            }
+                            else {
+                                resolve(newDoc);
+                            }
+                        });
+                    })];
             });
         });
     };
     EventAPI.prototype.findByPeriod = function (period) {
         return __awaiter(this, void 0, void 0, function () {
-            var days, days, today_date, end_date, start_date;
+            var _this = this;
             return __generator(this, function (_a) {
-                if (period == '24h') {
-                    days = 1;
-                }
-                else if (period == '7d') {
-                    days = 7;
-                }
-                ;
-                today_date = new Date();
-                end_date = today_date;
-                start_date = new Date();
-                start_date.setDate(today_date.getDate() - days);
-                return [2 /*return*/, this.store.find({ timestamp: { $gte: start_date, $lte: end_date } }, function (err, docs) {
-                        if (err)
-                            reject(err);
-                        resolve(docs);
+                return [2 /*return*/, new Promise(function (resolve, reject) {
+                        var days = 30;
+                        if (period === '24h') {
+                            days = 1;
+                        }
+                        else if (period === '7d') {
+                            days = 7;
+                        }
+                        var today_date = new Date();
+                        var end_date = today_date;
+                        var start_date = new Date();
+                        start_date.setDate(today_date.getDate() - days);
+                        return _this.store.find({ timestamp: { $gte: start_date, $lte: end_date } }, function (err, docs) {
+                            if (err) {
+                                reject(err);
+                            }
+                            else {
+                                resolve(docs);
+                            }
+                        });
                     })];
             });
         });
     };
     return EventAPI;
-}(DataSource));
-module.exports = EventAPI;
+}(apollo_datasource_1.DataSource));
+exports["default"] = EventAPI;

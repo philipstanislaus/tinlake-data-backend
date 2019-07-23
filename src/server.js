@@ -1,14 +1,18 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 exports.__esModule = true;
-var express_1 = require("express");
+var express_1 = __importDefault(require("express"));
 var apollo_server_express_1 = require("apollo-server-express");
-var schema = require('./services/graphql_settings/schema');
-var resolvers = require('./services/graphql_settings/resolvers');
-var EventAPI = require('./services/graphql_settings/datasources/event');
-var fs_1 = require("fs");
-var https_1 = require("https");
-var http_1 = require("http");
-var Datastore = require('nedb'), db = new Datastore({ filename: '.tinlake_events.db', autoload: true });
+var schema_1 = __importDefault(require("./services/graphqlsettings/schema"));
+var resolvers_1 = __importDefault(require("./services/graphqlsettings/resolvers"));
+var event_1 = __importDefault(require("./services/graphqlsettings/datasources/event"));
+var fs_1 = __importDefault(require("fs"));
+var https_1 = __importDefault(require("https"));
+var http_1 = __importDefault(require("http"));
+var nedb_1 = __importDefault(require("nedb"));
+var db = new nedb_1["default"]({ filename: '.tinlake_events.db', autoload: true });
 var configurations = {
     // Note: You may need sudo to run on port 443
     production: { ssl: true, port: 443, hostname: 'example.com' },
@@ -17,9 +21,9 @@ var configurations = {
 var environment = process.env.NODE_ENV === 'development' ? 'development' : 'production';
 var config = configurations[environment];
 var dataSources = function () { return ({
-    eventAPI: new EventAPI({ db: db })
+    eventAPI: new event_1["default"]({ store: db })
 }); };
-var apollo = new apollo_server_express_1.ApolloServer({ schema: schema, resolvers: resolvers, dataSources: dataSources });
+var apollo = new apollo_server_express_1.ApolloServer({ typeDefs: schema_1["default"], resolvers: resolvers_1["default"], dataSources: dataSources });
 var app = express_1["default"]();
 apollo.applyMiddleware({ app: app });
 // Create the HTTPS or HTTP server, per configuration
