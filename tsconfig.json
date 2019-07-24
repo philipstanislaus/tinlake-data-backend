@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "allowJs": false,
+    "baseUrl": "./src",
     "allowSyntheticDefaultImports": true,
     "jsx": "preserve",
     "lib": ["dom", "es2017"],
