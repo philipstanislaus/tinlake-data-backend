@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "lib": ["es2017", "esnext.asynciterable"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "preserveConstEnums": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "target": "es2016",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "outDir": "build",
+    "declaration": true,
+    "declarationMap": true,
+    "skipLibCheck": true
+  },
+  "include": [
+    "./src/**/*",
+    "./src/**/*.json"
+  ],
+  "exclude": [
+    "node_modules",
+    "typings"
+  ]
+}
