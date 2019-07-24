@@ -1,8 +1,8 @@
 import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
-import typeDefs from 'services/graphqlsettings/schema';
-import resolvers  from 'services/graphqlsettings/resolvers';
-import EventAPI  from 'services/graphqlsettings/datasources/event';
+import typeDefs from './services/graphqlsettings/schema';
+import resolvers  from './services/graphqlsettings/resolvers';
+import EventAPI  from './services/graphqlsettings/datasources/event';
 import fs from 'fs';
 import https from 'https';
 import http from 'http';

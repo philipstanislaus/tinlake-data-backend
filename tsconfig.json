@@ -1,31 +1,22 @@
 {
   "compilerOptions": {
-    "allowJs": false,
-    "baseUrl": "./src",
-    "allowSyntheticDefaultImports": true,
-    "jsx": "preserve",
-    "lib": ["dom", "es2017"],
+    "lib": ["es2017", "esnext.asynciterable"],
     "module": "commonjs",
     "moduleResolution": "node",
-    "noEmit": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "preserveConstEnums": true,
     "removeComments": false,
-    "skipLibCheck": true,
     "sourceMap": true,
-    "strict": true,
-    "target": "es2015",
+    "target": "es2016",
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "outDir": "build",
-    "declarationDir": "./dist",
-    "composite": true,
-    "declaration": true
+    "declaration": true,
+    "declarationMap": true,
+    "skipLibCheck": true
   },
   "include": [
-    "src/**/*",
-    "src/services/tinlake/addresses_tinlake.json"
+    "./src/**/*",
+    "./src/**/*.json"
   ],
   "exclude": [
     "node_modules",
