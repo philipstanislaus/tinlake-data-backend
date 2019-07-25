@@ -2,13 +2,17 @@ import express from 'express';
 import { ApolloServer } from 'apollo-server-express';
 import typeDefs from './services/graphqlsettings/schema';
 import resolvers  from './services/graphqlsettings/resolvers';
-import EventAPI  from './services/graphqlsettings/datasources/event';
 import fs from 'fs';
 import https from 'https';
 import http from 'http';
-import Datastore from 'nedb';
 
-const db = new Datastore({ filename: '.tinlake_events.db', autoload: true });
+
+
+import config from './config';
+
+console.log(config);
+
+
 
 const configurations = {
   // Note: You may need sudo to run on port 443
@@ -17,20 +21,16 @@ const configurations = {
 };
 
 const environment = process.env.NODE_ENV === 'development' ? 'development' : 'production';
-const config = configurations[environment];
+const env_config = configurations[environment];
 
-const dataSources = () => ({
-  eventAPI: new EventAPI({ store: db }),
-});
-
-const apollo = new ApolloServer({ typeDefs, resolvers, dataSources });
+const apollo = new ApolloServer({ typeDefs, resolvers });
 
 const app = express();
 apollo.applyMiddleware({ app });
 
 // Create the HTTPS or HTTP server, per configuration
 let server;
-if (config.ssl) {
+if (env_config.ssl) {
   // Assumes certificates are in .ssl folder from package root. Make sure the files
   // are secured.
   server = https.createServer(
@@ -47,9 +47,9 @@ if (config.ssl) {
 // Add subscription support
 apollo.installSubscriptionHandlers(server);
 
-server.listen({ port: config.port }, () =>
+server.listen({ port: env_config.port }, () =>
   console.log(
     '🚀 Server ready at',
-    `http${config.ssl ? 's' : ''}://${config.hostname}:${config.port}${apollo.graphqlPath}`,
+    `http${env_config.ssl ? 's' : ''}://${env_config.hostname}:${env_config.port}${apollo.graphqlPath}`,
   ),
 );

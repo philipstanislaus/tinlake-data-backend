@@ -1,14 +1,11 @@
-import { DataSource } from 'apollo-datasource';
 import Datastore from 'nedb';
 
-class EventAPI extends DataSource {
-  store: Datastore;
+class EventAPI {
+  datastore: Datastore;
 
-  constructor({ store }: { store: Datastore }) {
-    super();
-    this.store = store;
+  constructor(datastore: Datastore) {
+        this.datastore = datastore;
   }
-
   async createEvent(data:
     { Debt: string, TotalValueofNFTs: string, totalSupply: string, NumberOfLoans: string; }) {
     return new Promise((resolve, reject) => {
@@ -20,7 +17,7 @@ class EventAPI extends DataSource {
         NumberOfLoans: data['NumberOfLoans'],
       };
 
-      this.store.insert(doc, (err, newDoc) => {
+      this.datastore.insert(doc, (err, newDoc) => {
         if (err) { reject(err); } else { resolve(newDoc); }
       });
     });
@@ -39,7 +36,7 @@ class EventAPI extends DataSource {
       const start_date = new Date();
       start_date.setDate(today_date.getDate() - days);
 
-      return this.store.find(
+      return this.datastore.find(
         { timestamp: { $gte: start_date, $lte: end_date } },
         (err: Error, docs: any) => {
           if (err) { reject(err); } else { resolve(docs); }
