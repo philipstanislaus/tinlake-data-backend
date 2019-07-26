@@ -24,6 +24,7 @@ export async function getTinlakeData() {
   const TotalBalance = await tinlake.contracts.pile.Balance();
   const TotalValueofNFTs = await tinlake.contracts.shelf.bags();
   const NumberOfLoans = await tinlake.contracts.title.count();
+  const TotalSupply = await tinlake.contracts.collateral.totalSupply();
 
   const data = {
     total_debt: Number(TotalDebt[0].toString()),
