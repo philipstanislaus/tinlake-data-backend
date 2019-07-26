@@ -6,12 +6,7 @@ import fs from 'fs';
 import https from 'https';
 import http from 'http';
 
-
-
 import config from './config';
-
-console.log(config);
-
 
 
 const configurations = {

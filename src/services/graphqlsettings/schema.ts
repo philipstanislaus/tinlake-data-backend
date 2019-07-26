@@ -9,11 +9,12 @@ export const typeDefs = gql`
   }
 
   type TinlakeEvent {
-    timestamp: Int
-    cvt_supply: Int
-    debt: Int
-    cdp_debt: Int
-    collateral_value: Int
+    timestamp: String
+    total_debt: Int
+    total_balance: Int
+    total_value_of_nfts: Int
+    total_supply: Int
+    number_of_loans: Int
   }
 `;
 

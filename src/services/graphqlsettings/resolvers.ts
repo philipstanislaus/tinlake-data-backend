@@ -5,14 +5,14 @@ import { eventAPI } from '../../config'
 
 const resolvers: IResolvers = {
   Query: {
-    last1d: () =>
-      eventAPI.findByPeriod('24h'),
-    last7d: () =>
-      eventAPI.findByPeriod('7d'),
-    last30d: () =>
-      eventAPI.findByPeriod('30d'),
-    last90d: () =>
-      eventAPI.findByPeriod('90d'),
+    last1d: async () =>
+      await eventAPI.findByPeriod('24h'),
+    last7d: async () =>
+      await eventAPI.findByPeriod('7d'),
+    last30d: async () =>
+      await eventAPI.findByPeriod('30d'),
+    last90d: async () =>
+      await eventAPI.findByPeriod('90d'),
   },
 };
 
